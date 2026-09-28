@@ -42,7 +42,9 @@ static class UiTests
             using(var form=new MainForm(store.Load(defaults,notes),store,true))
             {
                 HiddenShow(form);
-                Check(form.ModCount==9,"startup lists Workshop packages and the schema-driven local Resources, Resources Plus, Needs, Needs Plus, Deposits and Buildings Plus editors");
+                // Three Workshop packages from the fixture plus every keyed editor schema that ships next to rmm.exe; the local count follows settings_schemas, so adding or leaving out a schema (the public repo has fewer) does not break the test.
+                int localEditors=Catalog.ScanLocalEditors(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"settings_schemas"),new List<string>()).Count;
+                Check(localEditors>=6&&form.ModCount==3+localEditors,"startup lists the three Workshop packages and every schema-driven local editor ("+localEditors+" found next to rmm.exe, at least Resources, Resources Plus, Needs, Needs Plus, Deposits and Buildings Plus)");
                 Check(form.SelectedSource==package&&form.HasEditor,"remembered package opens directly without package-specific code");
                 Check(form.TabCount==4&&form.ActionCount==3,"tabs come from schema and footer keeps exactly three actions");
                 Check(form.DisplayedValue("resources/count")=="0"&&form.DisplayedValue("general/enabled")=="0","Vehicle Materials starts disabled with an empty user-owned collection");Check(form.SwitchVisible&&!form.SwitchChecked&&form.SwitchNote.Contains("tesmioloader.ini"),"single plugin switch shows off while the INI switch is 0");
