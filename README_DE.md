@@ -1,4 +1,4 @@
-﻿# Workers & Resources: Soviet Republic â€“ Plugins fÃ¼r den TesmioLoader
+﻿# Workers & Resources: Soviet Republic “ Plugins für den TesmioLoader
 
 [English](README.md) | **Deutsch**
 
