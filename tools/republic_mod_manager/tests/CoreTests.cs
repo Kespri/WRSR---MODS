@@ -783,6 +783,25 @@ string b3=MakeBuild(root,"bridge-build-3");File.WriteAllBytes(Path.Combine(b3,"p
             Check(spec.LanguageDirectory=="languages"&&SafeFiles.Text(Path.Combine(folder,"languages","de.ini")).Contains("vb.item_name.empty = leer = Spieleigene ID"));
         });
 
+        // 0.5.21: choice_labels / choice_labels_key - the list shows a text per value, the INI keeps the value.
+        Test("choice_labels show a text per value and map it back (0.5.21)",()=>
+        {
+            string folder=Path.Combine(root,"choice-labels"),schema=Path.Combine(folder,"sample.launcher.ini");
+            Write(schema,"[launcher]\neditor_type=keyed_sections\nlayout_version=1\nid=x\nname=X\n[editor]\nplugin=x\nconfig=x.ini\nmaximum_items=8\n"+
+                "[detail:word]\nscope=global\nsection=x\nkey=word\ntype=choice\nchoices=stop|halt\nchoice_labels=STOP (Latin)|HALT (old)\nchoice_labels_key=x.word\nlabel=Word\n"+
+                "[detail:wrong]\nscope=global\nsection=x\nkey=wrong\ntype=choice\nchoices=a|b|c\nchoice_labels=A|B\nlabel=Wrong count\n"+
+                "[detail:plain]\nscope=global\nsection=x\nkey=plain\ntype=choice\nchoices=a|b\nlabel=Plain\n");
+            var spec=LocalEditorSpec.Load(schema);
+            LocalDetailField word=spec.Fields.Single(x=>x.Id=="word"),wrong=spec.Fields.Single(x=>x.Id=="wrong"),bareChoice=spec.Fields.Single(x=>x.Id=="plain");
+            Check(word.ChoiceLabels.Length==2&&word.ChoiceLabelsKey=="x.word"&&bareChoice.ChoiceLabels.Length==0&&bareChoice.ChoiceLabelsKey.Length==0);
+            // Without a key the literal labels are used; a count that does not match falls back to the values.
+            // (The key lookup needs a Language, which needs the embedded UI texts the test EXE does not carry.)
+            word.ChoiceLabelsKey="";
+            Check(spec.ChoiceText(null,word,"halt")=="HALT (old)"&&spec.ChoiceValue(null,word,"HALT (old)")=="halt");
+            Check(spec.ChoiceText(null,word,"other")=="other"&&spec.ChoiceValue(null,word,"other")=="other"&&spec.ChoiceText(null,word,"")=="");
+            Check(spec.ChoiceText(null,wrong,"b")=="b"&&spec.ChoiceText(null,bareChoice,"a")=="a"&&spec.ChoiceValue(null,bareChoice,"b")=="b");
+        });
+
         // 0.4.88: what a saved game needs, and what the next start will do.
         Test("saved games are read and the start order is derived (0.4.88)",()=>
         {

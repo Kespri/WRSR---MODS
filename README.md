@@ -56,7 +56,7 @@ changed is in `src/BUILD_INFO.md`).
 
 | Tool | Version | What it does |
 |---|---|---|
-| [Republic Mod Manager](tools/republic_mod_manager) | 0.5.20 | Windows program: settings, switching and loading of the plugins; its Workshop item brings the installer, the loader and the four plugins above |
+| [Republic Mod Manager](tools/republic_mod_manager) | 0.5.21 | Windows program: settings, switching and loading of the plugins; its Workshop item brings the installer, the loader and the four plugins above |
 
 ## Installing
 

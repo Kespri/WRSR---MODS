@@ -481,6 +481,9 @@ maximum = 127
 step = 1
 choices = technical|soviet|medical
 choices_source = registry              ; choice: Kennungen aus [source] plus Grundspiel
+choice_labels = STOP|СТОП|停           ; choice: Anzeige je Wert in derselben Reihenfolge; die INI
+choice_labels_key = x.feld.choice      ; behält den Wert. Sprachschlüssel <präfix>.<wert> gewinnt;
+                                       ; nicht mit allow_other oder choices_source
 allow_other = 1
 unique = 1                             ; kein Wert doppelt
 auto_increment = 1                     ; Dialog schlägt Maximum + 1 vor

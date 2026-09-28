@@ -1,4 +1,4 @@
-// Republic Mod Manager 0.5.20: generic manifest/schema driven plugin deployment.
+// Republic Mod Manager 0.5.21: generic manifest/schema driven plugin deployment.
 // Never loads a DLL during discovery and never edits Workshop defaults or loader code.
 // Since 0.9.0 a package needs only [mod] and [hooks] dll; everything Autoload used
 // to declare is derived by convention, and a plugin without a launcher schema gets

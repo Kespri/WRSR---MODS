@@ -56,7 +56,7 @@ installiert (gleiche API, gleiche Logzeilen; die Änderungen stehen in `src/BUIL
 
 | Werkzeug | Version | Was es macht |
 |---|---|---|
-| [Republic Mod Manager](tools/republic_mod_manager) | 0.5.20 | Windows-Programm: Einstellungen, Ein- und Ausschalten und Laden der Plugins; sein Workshop-Objekt bringt den Installer, den Loader und die vier Plugins oben mit |
+| [Republic Mod Manager](tools/republic_mod_manager) | 0.5.21 | Windows-Programm: Einstellungen, Ein- und Ausschalten und Laden der Plugins; sein Workshop-Objekt bringt den Installer, den Loader und die vier Plugins oben mit |
 
 ## Installation
 

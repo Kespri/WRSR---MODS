@@ -55,6 +55,10 @@ namespace TesmioAutoload
         // field in the detail panel, so long field lists fall into named blocks.
         public string Heading="", HeadingKey="";
         public string[] Choices = new string[0];
+        // choice_labels = A|B|C: what the list shows for each choice (same order, fallback text);
+        // choice_labels_key = prefix: the language key <prefix>.<value> wins over it. The INI keeps the value.
+        public string[] ChoiceLabels = new string[0];
+        public string ChoiceLabelsKey = "";
         // choice_prefix = 1: only the first comma-separated token has to be a choice;
         // what follows (factors, flags) is kept as written.
         public bool ChoicePrefix;
@@ -497,7 +501,7 @@ namespace TesmioAutoload
                 if(scope=="item"&&!s.IsSections)throw new FormatException(Msg.Key("err_scope_item_gibt_es", section));
                 if(type=="integer"||type=="decimal"||type=="pair"||type=="triple")
                 {minimum=Decimal.Parse(ini.Get(section,"minimum","-1000000"),CultureInfo.InvariantCulture);maximum=Decimal.Parse(ini.Get(section,"maximum","1000000"),CultureInfo.InvariantCulture);if(minimum>maximum)throw new FormatException(Msg.Key("err_ungueltiger_zahlenbereich", section));}
-                var f=new LocalDetailField{Id=section.Substring(7),Scope=scope,Section=ini.Get(section,"section",""),Key=ini.Required(section,"key"),Type=type,Label=ini.Get(section,"label",section.Substring(7)),LabelKey=ini.Get(section,"label_key",""),Description=ini.Get(section,"description",""),DescriptionKey=ini.Get(section,"description_key",""),Heading=ini.Get(section,"heading",""),HeadingKey=ini.Get(section,"heading_key",""),Choices=ini.Get(section,"choices","").Split('|').Select(x=>x.Trim()).Where(x=>x.Length>0).ToArray(),ChoicePrefix=ini.Get(section,"choice_prefix","0")=="1",Minimum=minimum,Maximum=maximum,Order=Order(ini,section),AllowOther=ini.Get(section,"allow_other","0")=="1",Unique=ini.Get(section,"unique","0")=="1",AutoIncrement=ini.Get(section,"auto_increment","0")=="1",InDialog=ini.Get(section,"dialog","0")=="1",ChoicesSource=ini.Get(section,"choices_source",""),Default=ini.Get(section,"default",""),Card=ini.Get(section,"card","global")};
+                var f=new LocalDetailField{Id=section.Substring(7),Scope=scope,Section=ini.Get(section,"section",""),Key=ini.Required(section,"key"),Type=type,Label=ini.Get(section,"label",section.Substring(7)),LabelKey=ini.Get(section,"label_key",""),Description=ini.Get(section,"description",""),DescriptionKey=ini.Get(section,"description_key",""),Heading=ini.Get(section,"heading",""),HeadingKey=ini.Get(section,"heading_key",""),Choices=ini.Get(section,"choices","").Split('|').Select(x=>x.Trim()).Where(x=>x.Length>0).ToArray(),ChoicePrefix=ini.Get(section,"choice_prefix","0")=="1",ChoiceLabels=ini.Get(section,"choice_labels","").Length==0?new string[0]:ini.Get(section,"choice_labels","").Split('|').Select(x=>x.Trim()).ToArray(),ChoiceLabelsKey=ini.Get(section,"choice_labels_key",""),Minimum=minimum,Maximum=maximum,Order=Order(ini,section),AllowOther=ini.Get(section,"allow_other","0")=="1",Unique=ini.Get(section,"unique","0")=="1",AutoIncrement=ini.Get(section,"auto_increment","0")=="1",InDialog=ini.Get(section,"dialog","0")=="1",ChoicesSource=ini.Get(section,"choices_source",""),Default=ini.Get(section,"default",""),Card=ini.Get(section,"card","global")};
                 if(!Int32.TryParse(ini.Get(section,"maximum_length","0"),NumberStyles.None,CultureInfo.InvariantCulture,out f.MaximumLength))throw new FormatException(Msg.Key("err_ungueltige_maximum_length", section));
                 if(type=="integer"||type=="decimal"){decimal step;if(!Decimal.TryParse(ini.Get(section,"step",type=="integer"?"1":"0.1"),NumberStyles.Float,CultureInfo.InvariantCulture,out step)||step<=0)throw new FormatException(Msg.Key("err_ungueltiger_zahlenbereich", section));f.Step=step;}
                 f.Picker=ini.Get(section,"picker","");f.CountLabel=ini.Get(section,"count_label","");f.CountLabelKey=ini.Get(section,"count_label_key","");f.PickerFormat=ini.Get(section,"picker_format","line").Trim();
@@ -604,6 +608,9 @@ namespace TesmioAutoload
         // Blue information box on the list card, between the description and the yellow save warning.
         public string LocalizedGroupNotice(Language language){return Text(language,GroupNoticeKey,GroupNotice).Replace("\\n","\n");}
         public string FieldLabel(Language language,LocalDetailField field){return Text(language,field.LabelKey,field.Label);}
+        // Shown text of a choice value, and the value behind a shown text (unknown text = the text itself).
+        public string ChoiceText(Language language,LocalDetailField field,string value){if(string.IsNullOrEmpty(value))return value??"";int i=Array.IndexOf(field.Choices,value);string fallback=i>=0&&i<field.ChoiceLabels.Length&&field.ChoiceLabels.Length==field.Choices.Length&&field.ChoiceLabels[i].Length>0?field.ChoiceLabels[i]:value;return i>=0&&field.ChoiceLabelsKey.Length>0?Text(language,field.ChoiceLabelsKey+"."+value,fallback):fallback;}
+        public string ChoiceValue(Language language,LocalDetailField field,string text){if(string.IsNullOrEmpty(text))return text??"";foreach(string c in field.Choices)if(ChoiceText(language,field,c)==text)return c;return text;}
         // A literal \n in a field description becomes a line break, as it already does for list columns.
         public string FieldDescription(Language language,LocalDetailField field){return Text(language,field.DescriptionKey,field.Description).Replace("\\n","\n");}
         public string FieldHeading(Language language,LocalDetailField field){return Text(language,field.HeadingKey,field.Heading);}

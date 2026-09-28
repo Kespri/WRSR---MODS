@@ -481,6 +481,9 @@ maximum = 127
 step = 1
 choices = technical|soviet|medical
 choices_source = registry              ; choice: identifiers from [source] plus base game
+choice_labels = STOP|СТОП|停           ; choice: what the list shows per value, same order; the INI
+choice_labels_key = x.field.choice     ; keeps the value. Language key <prefix>.<value> wins;
+                                       ; not with allow_other or choices_source
 allow_other = 1
 unique = 1                             ; no value twice
 auto_increment = 1                     ; dialog suggests maximum + 1
