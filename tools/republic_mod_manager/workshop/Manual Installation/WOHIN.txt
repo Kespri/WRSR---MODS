@@ -1,0 +1,46 @@
+Republic Mod Manager - Installation von Hand
+=============================================
+
+Voraussetzung: Der TesmioLoader von MaxLegend ist installiert, also gibt es
+im Spielordner bereits den Ordner tesmioloader\build mit tesmiolauncher.exe
+und tesmioloader.ini. Ohne ihn läuft nichts. Die tesmioloader.dll in diesem
+Ordner ist eine korrigierte Fassung seiner b0.3.6 (b0.3.6-rmm.1, gleiche API)
+und ersetzt die vorhandene - heb dir die alte auf, wenn du einen Weg zurück willst.
+
+1. Spiel, TesmioLauncher und Republic Mod Manager beenden.
+
+2. Den Ordner "tesmioloader" (liegt neben dieser Datei) auf den Spielordner
+   ziehen:
+      C:\Program Files (x86)\Steam\steamapps\common\SovietRepublic
+      Windows fragt "Ordner zusammenfuehren?" - Ja. Vorhandene Dateien dürfen
+      überschrieben werden; deine Einstellungen liegen in user_config und
+      werden nicht angefasst.
+
+   Danach liegen dort:
+      tesmioloader\build\tesmioloader.dll              der Loader (korrigierte Fassung b0.3.6-rmm.1)
+      tesmioloader\build\rmm.exe                       der Manager
+      tesmioloader\build\rmm.ini                       seine Grundeinstellungen
+      tesmioloader\build\rmm.README_DE.md / _EN.md     Anleitung (Deutsch / Englisch)
+      tesmioloader\build\rmm.SCHEMA_DE.md / _EN.md     Referenz für Plugin-Autoren
+      tesmioloader\build\settings_schemas\             Einstellungsseiten der Plugins
+      tesmioloader\build\plugins\workshop_bridge.dll   laedt Workshop-Pakete
+      tesmioloader\build\plugins\workshop_bridge.ini   ihre Grundeinstellungen
+      tesmioloader\build\plugins\buildings_plus.dll    neue Gebäude aus einer Erklärung
+      tesmioloader\build\plugins\buildings_plus.ini    seine Grundeinstellungen
+      tesmioloader\build\plugins\resources_plus.dll    eigene Ressourcen (Ersatz für resources.dll)
+      tesmioloader\build\plugins\resources_plus.template.ini   Vorlage; die echte Liste resources_plus.ini
+                                                       entsteht beim ersten Start aus deiner resources.ini
+      tesmioloader\build\plugins\needs_plus.dll        eigene Bürgerbedürfnisse (Ersatz für needs.dll)
+      tesmioloader\build\plugins\needs_plus.template.ini   Vorlage; die echte Liste needs_plus.ini
+                                                       entsteht beim ersten Start aus deiner needs.ini
+
+3. Die Datei tesmioloader\build\tesmioloader.ini mit dem Editor öffnen und
+   im Abschnitt [plugins] diese Zeile ergänzen (oder auf 1 stellen):
+      workshop_bridge=1
+   Die Datei ohne Formatierung speichern (UTF-8, kein BOM).
+
+4. rmm.exe starten. Fertig.
+
+Entfernen: die oben genannten Dateien löschen und in tesmioloader.ini
+workshop_bridge=0 setzen. Der Ordner user_config mit deinen Einstellungen
+kann bleiben.

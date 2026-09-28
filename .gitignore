@@ -1,0 +1,57 @@
+# =======================================================================
+# Workers & Resources: Soviet Republic - Modding .gitignore
+# Optimiert für 3D-Assets, Skripte und Custom Mod-Loader
+# =======================================================================
+
+# --- Windows & System-Müll (Verhindert fehlerhafte Vorschauen) ---
+Thumbs.db
+desktop.ini
+~$*
+*~
+
+# --- 3D-Modellierung & Editoren (z.B. Blender, Blender-Backups) ---
+*.blend
+*.blend1
+*.blend2
+*.blend3
+*.blend4
+*.bak
+
+# --- Grafikprogramme & Textur-Projekte (z.B. Photoshop, GIMP) ---
+*.psd
+*.xcf
+*.layer
+
+# --- Visual Studio / VS Code (Lokale Editor-Einstellungen ignorieren) ---
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# --- Temporäre Spiel-Dateien, Logfiles und Caches ---
+*.log
+*.tmp
+*.cache
+*.tlog
+*.binlog
+
+# =======================================================================
+# WICHTIG: Folgende Spieldateien werden NIEMALS ignoriert und landen sicher im Repo:
+# .ini, .dds, .ntr, .lua, .txt, .xml, .obj, .fbx
+# =======================================================================
+
+# --- Build-Ausgaben der Plugins (nur Quelltext im Repository) ---
+build/
+!/tools/republic_mod_manager/workshop/Manual Installation/tesmioloader/build/
+runs/
+*.dll
+*.exp
+*.lib
+*.pdb
+*.ilk
+*.exe
+
+# --- Republic Mod Manager: Build-Ausgabe und erzeugtes Symbol ---
+bin/
+*.ico
