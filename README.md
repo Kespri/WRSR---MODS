@@ -2,7 +2,7 @@
 
 **English** | [Deutsch](README_DE.md)
 
-## ðŸ¤– Attention, comrade: an AI helped build this
+## Attention, comrade: an AI helped build this
 
 These plugins were written with the help of an artificial intelligence. The five-year plans
 behind them were still drawn up, tested and sworn at by a human every time the game crashed.
